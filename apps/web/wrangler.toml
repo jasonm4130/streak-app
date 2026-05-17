@@ -1,0 +1,17 @@
+name = "streak-app"
+main = "src/worker.ts"
+compatibility_date = "2026-05-01"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+binding = "ASSETS"
+
+# Production environment — bound to streak.jasonmatthew.dev once Terraform applied.
+[[routes]]
+pattern = "streak.jasonmatthew.dev"
+custom_domain = true
+
+# Preview environment — uses *.workers.dev only, no custom domain.
+[env.preview]
+name = "streak-app-preview"
