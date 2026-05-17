@@ -1,4 +1,4 @@
-import { differenceInCalendarDays, addDays, startOfWeek } from 'date-fns';
+import { differenceInCalendarDays, addDays } from 'date-fns';
 
 export interface WeekInfo {
   weekNumber: number | 'pre' | 'post';
