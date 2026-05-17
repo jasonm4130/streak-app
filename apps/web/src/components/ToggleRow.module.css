@@ -1,0 +1,49 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 11px 10px;
+  min-height: var(--tap);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  text-align: left;
+}
+
+.row:hover {
+  background: var(--bg-elev);
+}
+
+.label {
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.glyph {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  font-variant-ligatures: none;
+}
+
+.standalone {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 6px 10px;
+  min-width: var(--tap);
+  min-height: 36px;
+  text-align: right;
+}
+
+.standalone:hover .glyph,
+.standalone:hover {
+  color: var(--fg-bright);
+}
+
+.on { color: var(--green); }
+.off { color: var(--fg-subtle); }

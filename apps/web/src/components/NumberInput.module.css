@@ -1,0 +1,39 @@
+.wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--fg-bright);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+  padding: 4px 6px;
+  width: 80px;
+  min-height: 32px;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  transition: border-color 120ms ease;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input:focus {
+  border-bottom-color: var(--green);
+}
+
+.suffix {
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-family: var(--font-mono);
+}

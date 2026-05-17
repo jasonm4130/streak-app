@@ -1,0 +1,49 @@
+.row {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border);
+  min-height: var(--tap);
+  width: 100%;
+  background: transparent;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  color: var(--fg);
+  font-family: var(--font-mono);
+  text-align: left;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.tappable {
+  cursor: pointer;
+}
+
+.tappable:hover {
+  background: var(--bg-elev);
+}
+
+.glyph {
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+}
+
+.glyph.hit { color: var(--green); }
+.glyph.miss { color: var(--red); }
+.glyph.pending { color: var(--fg-subtle); }
+
+.label {
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ctrl {
+  text-align: right;
+}

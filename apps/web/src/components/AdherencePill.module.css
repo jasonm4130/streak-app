@@ -1,0 +1,41 @@
+.pill {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.pill.green { border-color: var(--green); }
+.pill.amber { border-color: var(--amber); }
+.pill.red { border-color: var(--red); }
+
+.label {
+  font-size: 9px;
+  color: var(--fg-muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  color: var(--fg-bright);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.num {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.pct {
+  font-size: 14px;
+  color: var(--fg-muted);
+}

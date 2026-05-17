@@ -1,0 +1,37 @@
+.group {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.btn {
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--border-strong);
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  min-width: var(--tap);
+  min-height: 30px;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.btn:last-child {
+  border-right: 0;
+}
+
+.btn:hover {
+  color: var(--fg-bright);
+}
+
+.active {
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+}
+
+.active:hover {
+  color: var(--green);
+}

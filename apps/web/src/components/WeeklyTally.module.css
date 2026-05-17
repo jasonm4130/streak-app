@@ -1,0 +1,38 @@
+.wrap {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 3px;
+  align-items: end;
+  height: 56px;
+}
+
+.col {
+  border-radius: 1px 1px 0 0;
+  width: 100%;
+}
+
+.s0 { height: 8%;   background: var(--border); }
+.s1 { height: 50%;  background: var(--amber-dim); }
+.s2 { height: 100%; background: var(--green-dim); }
+.s3 { height: 100%; background: var(--green); }
+
+.current { outline: 1px solid var(--green); }
+
+.axis {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--fg-subtle);
+  text-align: center;
+  margin-top: var(--space-1);
+  font-variant-numeric: tabular-nums;
+}

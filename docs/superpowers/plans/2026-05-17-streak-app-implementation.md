@@ -496,10 +496,16 @@ export default defineConfig({
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/icon-512.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#0d1117" />
+    <meta name="theme-color" content="#191724" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="streak" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <title>streak</title>
   </head>
   <body>
@@ -508,6 +514,8 @@ export default defineConfig({
   </body>
 </html>
 ```
+
+Theme colour `#191724` is the Rosé Pine `base` (per spec §8, locked during pre-execution frontend-design pass).
 
 - [ ] **Step 4.7: `apps/web/src/vite-env.d.ts`**
 
@@ -1657,52 +1665,19 @@ git commit -m "feat(web): zustand UI store"
 
 ### Task 16: Design tokens
 
+> **Pre-done.** `apps/web/src/styles/tokens.css` was generated during the pre-execution frontend-design pass and already exists on disk. The Rosé Pine palette + JetBrains Mono/Geist Sans pairing are locked. Just verify the file is present and matches what spec §8 describes; do not regenerate.
+
 **Files:**
-- Create: `apps/web/src/styles/tokens.css`
+- ~~Create:~~ Verify exists: `apps/web/src/styles/tokens.css`
 - Modify: `apps/web/src/styles/globals.css`
 
-- [ ] **Step 16.1: Tokens**
+- [ ] **Step 16.1: Verify tokens.css**
 
-```css
-/* apps/web/src/styles/tokens.css */
-:root {
-  /* Colour — terminal/data-tool palette */
-  --bg: #0d1117;
-  --bg-elev: #161b22;
-  --border: #21262d;
-  --fg: #c9d1d9;
-  --fg-muted: #6e7681;
-  --fg-bright: #f0f6fc;
-
-  --green: #7ee787;
-  --amber: #f0883e;
-  --red: #f85149;
-
-  /* Type */
-  --font-mono: ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-
-  /* Spacing — 4pt grid */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-
-  /* Radius */
-  --r-sm: 4px;
-  --r-md: 8px;
-  --r-lg: 12px;
-
-  /* Tap target */
-  --tap: 44px;
-
-  /* Layout */
-  --tabbar-h: 56px;
-  --safe-bottom: env(safe-area-inset-bottom, 0);
-}
+```bash
+test -f apps/web/src/styles/tokens.css && head -20 apps/web/src/styles/tokens.css
 ```
+
+Expected: file exists, includes `:root { --bg: #191724; ... --green: #9ccfd8; ... }`. If missing, restore from git (`git show HEAD:apps/web/src/styles/tokens.css > apps/web/src/styles/tokens.css`).
 
 - [ ] **Step 16.2: Update globals**
 
@@ -1723,6 +1698,7 @@ html, body, #root {
   font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.45;
+  font-variant-numeric: tabular-nums;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -1742,20 +1718,20 @@ a {
 }
 ```
 
-- [ ] **Step 16.3: Commit**
+- [ ] **Step 16.3: Commit globals (tokens.css is already committed from the pre-execution pass)**
 
 ```bash
-git add apps/web/src/styles/
-git commit -m "feat(web): design tokens + global reset (dark terminal theme)"
+git add apps/web/src/styles/globals.css
+git commit -m "feat(web): global reset paired with Rosé Pine tokens"
 ```
 
 ---
 
 ## Phase 6 — Components via frontend-design skill
 
-### Task 17: Invoke frontend-design for components
+### Task 17: Verify pre-generated components
 
-**This task uses the `frontend-design` skill. The implementing agent invokes it once with a comprehensive brief; the skill produces the full `apps/web/src/components/` directory.**
+> **Pre-done.** The `frontend-design` skill was invoked during the brainstorming → execution handoff. All 12 components + their CSS Modules already exist on disk at `apps/web/src/components/*`. Do NOT re-invoke `frontend-design`. This task is now a verification + integration step.
 
 **Files:**
 - Create: `apps/web/src/components/TabBar.tsx`
@@ -1771,67 +1747,51 @@ git commit -m "feat(web): design tokens + global reset (dark terminal theme)"
 - Create: `apps/web/src/components/WeeklyTally.tsx`
 - Create: `apps/web/src/components/DayRow.tsx`
 
-- [ ] **Step 17.1: Invoke `frontend-design` skill with this exact brief**
-
-```
-Generate the components/ directory for apps/web/src/components/. All components are React 19 functional components in TypeScript, importing styles from CSS Modules (one .module.css per .tsx). Read these context files first:
-
-- docs/superpowers/specs/2026-05-17-streak-app-design.md (full spec, especially §8 visual brief)
-- apps/web/src/types.ts (DayLog, Photo, Settings)
-- apps/web/src/lib/scoring.ts (AdherenceBand)
-- apps/web/src/styles/tokens.css (design tokens — use --bg, --green etc; do not hardcode colours)
-
-Aesthetic: terminal / data-tool. Monospace primary typeface (--font-mono). Dark (#0d1117 family). High info density. No loading states, no skeletons, no toasts, no emoji, no gradients, no animations except crossfade on data change. Status uses single-glyph indicators: [x], [ ], ●, ○, ↑, ↓, →. Three signal colours only: green (--green good), amber (--amber borderline), red (--red missed). Greyscale otherwise. Tap targets ≥44pt. WCAG AA contrast against the dark background.
-
-Reference vibe: Plausible Analytics, htop, GitHub commit graph, Linear command bar. Reject: Apple Fitness, Whoop, gradient/3D ring aesthetics.
-
-Components to generate, each with its props interface, CSS Module, and a brief usage example in a JSDoc comment:
-
-1. TabBar — props { tab: TabKey; onSelect: (t: TabKey) => void }. Fixed-bottom 4-tab nav. Active tab in green, inactive in fg-muted. Each tab a glyph + label ("today" / "history" / "stats" / "settings"). 44pt tall, respects --safe-bottom.
-
-2. AdherencePill — props { value: number; band: AdherenceBand; label: string }. Compact pill: label small + value % big. Coloured border by band.
-
-3. FieldRow — props { label: string; status: 'hit' | 'miss' | 'pending'; children: ReactNode; onClick?: () => void }. One row in the Today list. Left: monospace label + glyph indicator. Right: children (the input). Whole row tappable if onClick provided. Status glyph in band colour.
-
-4. ButtonGroup — props { value: T | undefined; options: { value: T; label: string }[]; onChange: (v: T) => void }. Generic three-button toggle. Selected option has border in green. Used for session status.
-
-5. NumberInput — props { value: number | undefined; onChange: (n: number | undefined) => void; placeholder?: string; step?: number; min?: number; max?: number; suffix?: string }. Mono input, right-aligned numeric. Suffix in fg-muted ("h", "kg", "g").
-
-6. ToggleRow — props { value: boolean; onChange: (v: boolean) => void; label?: string }. Tap-to-toggle. Glyph [x] / [ ].
-
-7. NoteInput — props { value: string | undefined; onChange: (v: string) => void; placeholder?: string }. Multiline textarea using --font-sans (system-ui), auto-grow to content.
-
-8. Sparkline — props { values: number[]; width?: number; height?: number; bandFn?: (v: number) => AdherenceBand }. Tiny SVG bar chart, one bar per value, coloured by bandFn (default: all fg).
-
-9. WeightChart — props { points: { date: string; kg: number }[]; rollingAvg: { date: string; kg: number }[]; height?: number }. SVG: scatter daily points + line for rolling avg. X axis: chronological. Y axis: auto-fit. Mono labels for min/max/today on the right.
-
-10. HorizontalBar — props { label: string; value: number; max?: number; band?: AdherenceBand; showPercent?: boolean }. One horizontal bar with mono label on the left, bar in the middle, value on the right.
-
-11. WeeklyTally — props { weeks: { weekNumber: number; sessions: number }[]; target?: number }. 15 columns, each showing 0/1/2+ sessions vs target=2. Bars under-target in fg-muted, at-target in green, over in green-bright.
-
-12. DayRow — props { day: DayLog; score: { hit: number; total: number }; onExpand?: () => void; expanded?: boolean; settings: Settings }. One-line History row: "Sun 17/05 · 6/7 · 86%" coloured by band. When expanded, shows all filled fields below in mono.
-
-All components must be exported as named exports. No default exports. Place imports of TabKey, AdherenceBand, DayLog, Settings from relative paths into the components dir (i.e. ../store, ../lib/scoring, ../types).
-
-Do not implement screen logic — only components. Screens (Today/History/Stats/Settings/Onboarding) will be wired separately and import these.
-```
-
-- [ ] **Step 17.2: Manually verify the generated components**
-
-After frontend-design returns, verify:
-- All 12 files present in `apps/web/src/components/`
-- Each has a sibling `.module.css`
-- `pnpm --filter @streak/web typecheck` passes
-- `pnpm --filter @streak/web lint` passes
-
-If typecheck or lint fails, fix issues in-place — do not re-invoke frontend-design.
-
-- [ ] **Step 17.3: Commit**
+- [ ] **Step 17.1: Verify components are present**
 
 ```bash
-git add apps/web/src/components/
-git commit -m "feat(web): UI components via frontend-design skill"
+ls apps/web/src/components/ | sort
 ```
+
+Expected files (24 total — 12 .tsx + 12 .module.css):
+
+```
+AdherencePill.module.css   AdherencePill.tsx
+ButtonGroup.module.css     ButtonGroup.tsx
+DayRow.module.css          DayRow.tsx
+FieldRow.module.css        FieldRow.tsx
+HorizontalBar.module.css   HorizontalBar.tsx
+NoteInput.module.css       NoteInput.tsx
+NumberInput.module.css     NumberInput.tsx
+Sparkline.module.css       Sparkline.tsx
+TabBar.module.css          TabBar.tsx
+ToggleRow.module.css       ToggleRow.tsx
+WeeklyTally.module.css     WeeklyTally.tsx
+WeightChart.module.css     WeightChart.tsx
+```
+
+If anything is missing, restore from git: `git checkout HEAD -- apps/web/src/components/`.
+
+- [ ] **Step 17.2: Run typecheck + lint**
+
+```bash
+pnpm --filter @streak/web typecheck
+pnpm --filter @streak/web lint
+```
+
+Expected: PASS. The components import from `../store`, `../lib/scoring`, `../types`, `../lib/dates` — all of which were created in Tasks 6, 8, 10, 15, so by the time you reach this task those imports should resolve cleanly.
+
+If typecheck fails on a component import path, fix in-place (e.g. adjust a relative path) — do not re-invoke `frontend-design`.
+
+- [ ] **Step 17.3: Visual smoke test in dev server**
+
+```bash
+pnpm --filter @streak/web dev
+```
+
+Open http://localhost:5173. You should see the onboarding flow (Tasks 18-19 will be needed for full screens; for now the App stub renders). The Rosé Pine palette should be visible — dark plum background, JetBrains Mono typeface.
+
+If colours look wrong, check that `apps/web/index.html` includes the Google Fonts link (set in Task 4.6) and that `globals.css` imports `tokens.css` (Task 16.2).
 
 ---
 

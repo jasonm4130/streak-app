@@ -1,0 +1,73 @@
+/*
+ * streak — design tokens
+ *
+ * Palette: Rosé Pine Main (https://rosepinetheme.com/palette/ingredients/)
+ * Signal mapping for adherence bands:
+ *   green/good    → foam   (#9ccfd8)   — used for hit/success
+ *   amber/border  → gold   (#f6c177)
+ *   red/missed    → love   (#eb6f92)
+ *
+ * Typography: JetBrains Mono Variable for data + UI; Geist Sans for free-text notes.
+ * Both loaded from Google Fonts in apps/web/index.html.
+ *
+ * Spacing: 4pt grid.
+ * Tap targets: 44pt minimum.
+ */
+
+:root {
+  /* Surfaces */
+  --bg: #191724;            /* base */
+  --bg-elev: #1f1d2e;       /* surface */
+  --bg-row: #26233a;        /* overlay / row highlight */
+  --border: #26233a;        /* default border */
+  --border-strong: #403d52; /* highlight-med */
+
+  /* Foreground */
+  --fg: #e0def4;            /* text */
+  --fg-bright: #f0eef9;     /* headings, current values */
+  --fg-muted: #908caa;      /* subtle text, labels */
+  --fg-subtle: #6e6a86;     /* de-emphasised */
+
+  /* Signal — Rosé Pine accents */
+  --green: #9ccfd8;         /* foam — hit / success */
+  --green-dim: #5a7b80;     /* darker fill (bars) */
+  --green-ink: #1d3438;     /* tint for selected backgrounds */
+
+  --amber: #f6c177;         /* gold — borderline */
+  --amber-dim: #8a6e44;
+  --amber-ink: #3a2f1c;
+
+  --red: #eb6f92;           /* love — missed */
+  --red-dim: #844056;
+  --red-ink: #361822;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Spacing — 4pt grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Radius */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+
+  /* Layout */
+  --tap: 44px;
+  --tabbar-h: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+  --max-w: 480px;
+}
+
+/* Color band utility — used by JS via getComputedStyle if needed */
+:root {
+  --band-green: var(--green);
+  --band-amber: var(--amber);
+  --band-red: var(--red);
+}

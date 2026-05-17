@@ -1,0 +1,56 @@
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tabbar-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 50;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  border: 0;
+  border-top: 2px solid transparent;
+  background: transparent;
+  color: var(--fg-subtle);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 6px 0 0;
+  min-height: var(--tap);
+  transition: color 120ms ease;
+}
+
+.tab:hover {
+  color: var(--fg-muted);
+}
+
+.glyph {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.label {
+  font-size: 10px;
+}
+
+.active {
+  color: var(--green);
+  border-top-color: var(--green);
+}
+
+.active .glyph {
+  color: var(--green);
+}

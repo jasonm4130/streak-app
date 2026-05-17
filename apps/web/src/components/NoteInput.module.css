@@ -1,0 +1,25 @@
+.input {
+  display: block;
+  width: 100%;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-2) var(--space-3);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  margin: 0 0 var(--space-3);
+  transition: border-color 120ms ease;
+}
+
+.input::placeholder {
+  color: var(--fg-subtle);
+  font-style: italic;
+}
+
+.input:focus {
+  border-color: var(--border-strong);
+}

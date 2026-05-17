@@ -211,15 +211,17 @@ Forced 3-step wizard on first launch (no Settings row exists):
 
 Targets default per §10. User can adjust later in Settings.
 
-## 8. Visual brief (handed to frontend-design at implementation time)
+## 8. Visual brief
 
-> **Aesthetic:** Terminal / data-tool. Monospace primary typeface (JetBrains Mono or SF Mono). Dark background (`#0d1117` GitHub-dark family). High contrast. Information density over white space.
+**Status (updated 2026-05-17):** The `frontend-design` skill was invoked as a pre-execution pass; the palette + typography are locked, and the 12 components + `tokens.css` already exist on disk under `apps/web/src/components/` and `apps/web/src/styles/tokens.css`. Plan Task 17 is now a verification step rather than a generation step. The brief below is the canonical design source of truth for future iterations.
+
+> **Aesthetic:** Terminal / data-tool. Monospace primary typeface. Dark background. High contrast. Information density over white space — every pixel earning its keep.
+>
+> **Palette (locked: Rosé Pine Main):** base `#191724`, surface `#1f1d2e`, text `#e0def4`, muted `#908caa`, subtle `#6e6a86`. Three signal colours — foam `#9ccfd8` (good), gold `#f6c177` (borderline), love `#eb6f92` (missed). Greyscale elsewhere. *Originally specced as GitHub Dark + green/amber/red; switched after a side-by-side visual pass because Rosé Pine fit the "soft but serious" goal without breaching the dark-theme constraint.*
 >
 > **Tone:** Honest, unbranded, no marketing energy. No emoji decoration. Status uses single-glyph indicators: `[x]`, `[ ]`, `●`, `○`, `↑`, `↓`, `→`.
 >
-> **Colour:** Three signal colours only — green (`#7ee787` good), amber (`#f0883e` borderline), red (`#f85149` missed). All other UI in greyscale (`#c9d1d9` body, `#6e7681` muted, `#21262d` borders).
->
-> **Typography:** Monospace for data/labels; system-ui sans for free-text note inputs. Hierarchy via colour and weight, not size jumps.
+> **Typography (locked):** **JetBrains Mono** for data/labels/UI; **Geist Sans** for free-text notes (the only prose surface in the app). Both loaded from Google Fonts. Tabular numerals throughout. Hierarchy via colour and weight, not size jumps.
 >
 > **Charts:** Hand-rolled SVG. Sparklines, simple line + scatter, horizontal bars. No 3D, no animations beyond crossfade on data change.
 >
