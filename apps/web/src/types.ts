@@ -3,7 +3,6 @@ export type SessionStatus = 'done' | 'modified' | 'skipped';
 export interface DayLog {
   date: string; // ISO 'YYYY-MM-DD', local timezone, primary key
   session?: SessionStatus;
-  sessionNote?: string;
   sleepHours?: number;
   weightKg?: number;
   hydrationOk?: boolean;

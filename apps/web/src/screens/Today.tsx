@@ -86,14 +86,6 @@ export function Today({ settings }: { settings: Settings }) {
         </FieldRow>
       )}
 
-      <FieldRow label="session note" status="pending">
-        <NoteInput
-          value={day.sessionNote}
-          onChange={(v) => patch({ sessionNote: v })}
-          placeholder="distance / pace / feel"
-        />
-      </FieldRow>
-
       <FieldRow
         label={`sleep ≥${settings.sleepFloorHours}h`}
         status={hitStatus((day.sleepHours ?? 0) >= settings.sleepFloorHours)}

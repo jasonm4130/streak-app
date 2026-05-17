@@ -64,7 +64,7 @@ export function DayRow({ day, score, settings, expanded, onExpand }: DayRowProps
 
       {expanded && (
         <div className={styles.detail}>
-          <Kv k="session" v={day.session ? `${day.session}${day.sessionNote ? ` · ${day.sessionNote}` : ''}` : null} hit={day.session === 'done' || day.session === 'modified'} />
+          <Kv k="session" v={day.session ?? null} hit={day.session === 'done' || day.session === 'modified'} />
           <Kv
             k="sleep"
             v={day.sleepHours !== undefined ? `${day.sleepHours}h` : null}
