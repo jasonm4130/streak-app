@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "playwright test",
+    "e2e": "playwright test --config tests/e2e/playwright.config.ts",
     "deploy:preview": "wrangler deploy --env preview",
     "deploy:production": "wrangler deploy",
     "generate:icon": "node scripts/generate-icon.mjs"
