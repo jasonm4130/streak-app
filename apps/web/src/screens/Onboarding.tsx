@@ -36,10 +36,12 @@ export function Onboarding() {
             min={20}
             max={300}
             suffix="kg"
+            data-testid="onboarding-weight"
           />
           <button
             disabled={weight === undefined || weight <= 0}
             onClick={() => setStep('marathon')}
+            data-testid="onboarding-continue"
             style={{
               marginTop: 'var(--space-4)',
               padding: 'var(--space-3) var(--space-4)',
@@ -73,6 +75,7 @@ export function Onboarding() {
           />
           <button
             onClick={finish}
+            data-testid="onboarding-done"
             style={{
               marginTop: 'var(--space-4)',
               padding: 'var(--space-3) var(--space-4)',

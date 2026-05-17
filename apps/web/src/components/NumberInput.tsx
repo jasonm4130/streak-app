@@ -18,6 +18,7 @@ interface NumberInputProps {
   min?: number;
   max?: number;
   suffix?: string;
+  'data-testid'?: string;
 }
 
 export function NumberInput({
@@ -28,6 +29,7 @@ export function NumberInput({
   min,
   max,
   suffix,
+  ...rest
 }: NumberInputProps) {
   // Keep a local string so users can type things like "7." without snapping to 7.
   const [text, setText] = useState<string>(value === undefined ? '' : String(value));
@@ -57,6 +59,7 @@ export function NumberInput({
         step={step}
         min={min}
         max={max}
+        data-testid={rest['data-testid']}
         onChange={(e) => setText(e.target.value)}
         onBlur={(e) => commit(e.target.value)}
       />

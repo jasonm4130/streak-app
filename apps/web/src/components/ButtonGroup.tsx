@@ -40,6 +40,7 @@ export function ButtonGroup<T extends string>({
             key={opt.value}
             type="button"
             aria-pressed={active}
+            data-testid={`bg-${opt.value}`}
             className={`${styles.btn} ${active ? styles.active : ''}`}
             onClick={() => onChange(opt.value)}
           >

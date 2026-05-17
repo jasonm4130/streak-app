@@ -17,6 +17,7 @@ interface FieldRowProps {
   status: Status;
   children: ReactNode;
   onClick?: () => void;
+  'data-testid'?: string;
 }
 
 const GLYPH: Record<Status, string> = {
@@ -25,13 +26,14 @@ const GLYPH: Record<Status, string> = {
   pending: '○',
 };
 
-export function FieldRow({ label, status, children, onClick }: FieldRowProps) {
+export function FieldRow({ label, status, children, onClick, ...rest }: FieldRowProps) {
   const Tag = onClick ? 'button' : 'div';
   return (
     <Tag
       className={`${styles.row} ${onClick ? styles.tappable : ''}`}
       onClick={onClick}
       type={onClick ? 'button' : undefined}
+      data-testid={rest['data-testid']}
     >
       <span className={`${styles.glyph} ${styles[status]}`} aria-hidden>
         {GLYPH[status]}

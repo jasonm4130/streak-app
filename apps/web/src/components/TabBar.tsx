@@ -38,6 +38,7 @@ export function TabBar({ tab, onSelect }: TabBarProps) {
             role="tab"
             aria-selected={active}
             aria-label={t.label}
+            data-testid={`tab-${t.key}`}
             className={`${styles.tab} ${active ? styles.active : ''}`}
             onClick={() => onSelect(t.key)}
           >

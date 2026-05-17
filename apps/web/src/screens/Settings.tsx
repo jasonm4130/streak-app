@@ -77,6 +77,7 @@ export function Settings({ settings }: { settings: SettingsT }) {
 
       <button
         onClick={doExport}
+        data-testid="settings-export"
         style={{ display: 'block', width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', color: 'var(--green)', marginBottom: 'var(--space-3)' }}
       >
         export JSON ↓

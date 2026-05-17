@@ -105,6 +105,7 @@ export function Today({ settings }: { settings: Settings }) {
           min={0}
           max={16}
           suffix="h"
+          data-testid="today-sleep"
         />
       </FieldRow>
 
@@ -116,11 +117,12 @@ export function Today({ settings }: { settings: Settings }) {
           min={20}
           max={300}
           suffix="kg"
+          data-testid="today-weight"
         />
       </FieldRow>
 
       <FieldRow label="hydration ✓ pale" status={hitStatus(!!day.hydrationOk)}>
-        <ToggleRow value={!!day.hydrationOk} onChange={(v) => patch({ hydrationOk: v })} />
+        <ToggleRow value={!!day.hydrationOk} onChange={(v) => patch({ hydrationOk: v })} data-testid="today-hydration" />
       </FieldRow>
 
       <FieldRow
@@ -136,15 +138,16 @@ export function Today({ settings }: { settings: Settings }) {
           min={0}
           max={500}
           suffix="g"
+          data-testid="today-protein"
         />
       </FieldRow>
 
       <FieldRow label="mobility 5min" status={hitStatus(!!day.mobilityDone)}>
-        <ToggleRow value={!!day.mobilityDone} onChange={(v) => patch({ mobilityDone: v })} />
+        <ToggleRow value={!!day.mobilityDone} onChange={(v) => patch({ mobilityDone: v })} data-testid="today-mobility" />
       </FieldRow>
 
       <FieldRow label="reading 10pg" status={hitStatus(!!day.readingDone)}>
-        <ToggleRow value={!!day.readingDone} onChange={(v) => patch({ readingDone: v })} />
+        <ToggleRow value={!!day.readingDone} onChange={(v) => patch({ readingDone: v })} data-testid="today-reading" />
       </FieldRow>
 
       <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />
