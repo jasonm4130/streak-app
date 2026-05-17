@@ -1,11 +1,33 @@
-:root {
-  color-scheme: dark;
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
 }
+
 html, body, #root {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #0d1117;
-  color: #c9d1d9;
-  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
 }
