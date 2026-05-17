@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+
+# Vite / Vitest
+.vite/
+coverage/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Brainstorming workspace (visual companion mockups + state)
+.superpowers/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
