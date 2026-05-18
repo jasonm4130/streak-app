@@ -1,3 +1,5 @@
+import { PHOTO_JPEG_QUALITY, PHOTO_MAX_EDGE_PX } from './constants';
+
 export async function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -16,7 +18,11 @@ export async function dataUrlToBlob(url: string): Promise<Blob> {
  * Downsize an image blob so its longest edge is at most `maxEdge`, output JPEG q=0.8.
  * Uses HTMLCanvasElement; only works in a browser context.
  */
-export async function downsize(blob: Blob, maxEdge = 800, quality = 0.8): Promise<Blob> {
+export async function downsize(
+  blob: Blob,
+  maxEdge = PHOTO_MAX_EDGE_PX,
+  quality = PHOTO_JPEG_QUALITY,
+): Promise<Blob> {
   const bitmap = await createImageBitmap(blob);
   const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
   const w = Math.round(bitmap.width * scale);

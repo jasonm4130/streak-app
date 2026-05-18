@@ -1,4 +1,5 @@
 import type { DayLog, Settings } from '../types';
+import { BAND_AMBER_THRESHOLD, BAND_GREEN_THRESHOLD } from './constants';
 
 interface DayScore {
   hit: number;
@@ -40,7 +41,7 @@ export function adherence(days: DayLog[], s: Settings): number {
 export type AdherenceBand = 'green' | 'amber' | 'red';
 
 export function adherenceBand(value: number): AdherenceBand {
-  if (value >= 0.85) return 'green';
-  if (value >= 0.7) return 'amber';
+  if (value >= BAND_GREEN_THRESHOLD) return 'green';
+  if (value >= BAND_AMBER_THRESHOLD) return 'amber';
   return 'red';
 }
