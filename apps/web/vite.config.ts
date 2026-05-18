@@ -35,7 +35,6 @@ export default defineConfig({
       },
     }),
   ],
-  // @ts-expect-error: vitest config
   test: {
     environment: 'happy-dom',
     globals: true,
