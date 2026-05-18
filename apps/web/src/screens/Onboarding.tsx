@@ -1,3 +1,8 @@
+/**
+ * Onboarding screen: two-step capture of body weight then marathon date,
+ * shown by `App` when no settings row exists. Writes the initial `Settings`
+ * singleton to Dexie on completion.
+ */
 import { useState } from 'react';
 import { db } from '../db';
 import { DEFAULT_SETTINGS, DEFAULT_MARATHON_DATE } from '../types';

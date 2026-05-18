@@ -1,4 +1,8 @@
-// apps/web/scripts/generate-icon.mjs
+/**
+ * Build-time generator for the [x] glyph PWA icon at apps/web/public/icon-512.png.
+ * Run via `pnpm generate:icon` after dependency bumps that may change PNG
+ * output (e.g. sharp updates).
+ */
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';

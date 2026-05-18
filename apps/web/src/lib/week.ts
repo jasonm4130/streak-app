@@ -1,6 +1,13 @@
 import { differenceInCalendarDays, addDays } from 'date-fns';
 import { TOTAL_WEEKS } from './constants';
 
+/**
+ * Where a given date sits in the training plan.
+ *
+ * `weekNumber` is `'pre'` before week 1 starts, an integer 1..15 during the
+ * plan, or `'post'` after race day. `dayOfWeek` is 1 (Mon) .. 7 (Sun) for
+ * in-plan dates; for `'post'` it's days since race; for `'pre'` it's 0.
+ */
 export interface WeekInfo {
   weekNumber: number | 'pre' | 'post';
   dayOfWeek: number; // 1 (Mon) .. 7 (Sun); 0 only in 'pre'/'post' edge irrelevant
@@ -12,6 +19,14 @@ function week1Start(marathonDate: Date): Date {
   return addDays(marathonDate, -(TOTAL_WEEKS - 1) * 7 - 6);
 }
 
+/**
+ * Map a date to its `WeekInfo` given the marathon date. Invariant: race day
+ * is always Week 15 Day 7 (Sunday). Weeks run Monday → Sunday.
+ *
+ * @example
+ *   weekFor(new Date('2026-08-30'), new Date('2026-08-30'))
+ *   // → { weekNumber: 15, dayOfWeek: 7 }
+ */
 export function weekFor(date: Date, marathonDate: Date): WeekInfo {
   const w1 = week1Start(marathonDate);
   const daysFromW1Start = differenceInCalendarDays(date, w1);

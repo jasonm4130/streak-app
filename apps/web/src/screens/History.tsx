@@ -1,4 +1,8 @@
-// apps/web/src/screens/History.tsx
+/**
+ * History screen: scrollable list of recent days as `DayRow`s with inline
+ * edit-on-expand. Window length is user-selectable; reads `DayLog`s from
+ * Dexie filtered to the chosen window.
+ */
 import { useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { subDays } from 'date-fns';
