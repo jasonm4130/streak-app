@@ -24,8 +24,8 @@ importers:
         specifier: ^4.0.10
         version: 4.4.2
       dexie-react-hooks:
-        specifier: ^1.1.7
-        version: 1.1.7(@types/react@19.2.14)(dexie@4.4.2)(react@19.2.6)
+        specifier: ^4.4.0
+        version: 4.4.0(dexie@4.4.2)(react@19.2.6)
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -33,8 +33,8 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
       ulid:
-        specifier: ^2.3.0
-        version: 2.4.0
+        specifier: ^3.0.2
+        version: 3.0.2
       zustand:
         specifier: ^5.0.2
         version: 5.0.13(@types/react@19.2.14)(react@19.2.6)
@@ -1714,11 +1714,10 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  dexie-react-hooks@1.1.7:
-    resolution: {integrity: sha512-Lwv5W0Hk+uOW3kGnsU9GZoR1er1B7WQ5DSdonoNG+focTNeJbHW6vi6nBoX534VKI3/uwHebYzSw1fwY6a7mTw==}
+  dexie-react-hooks@4.4.0:
+    resolution: {integrity: sha512-ObLXBS5+4BJU8vtSvBx6b9fY6zZYgniAtwxzjCHsUQadgbqYN6935X2/1TWw4Rf2N1aZV1io5/ziox4vKuxABA==}
     peerDependencies:
-      '@types/react': '>=16'
-      dexie: ^3.2 || ^4.0.1-alpha
+      dexie: '>=4.2.0-alpha.1 <5.0.0'
       react: '>=16'
 
   dexie@4.4.2:
@@ -2695,8 +2694,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ulid@2.4.0:
-    resolution: {integrity: sha512-fIRiVTJNcSRmXKPZtGzFQv9WRrZ3M9eoptl/teFJvjOzmpU+/K/JH6HZ8deBfb5vMEpicJcLn7JmvdknlMq7Zg==}
+  ulid@3.0.2:
+    resolution: {integrity: sha512-yu26mwteFYzBAot7KVMqFGCVpsF6g8wXfJzQUHvu1no3+rRRSFcSV2nKeYvNPLD2J4b08jYBDhHUjeH0ygIl9w==}
     hasBin: true
 
   unbox-primitive@1.1.0:
@@ -4597,9 +4596,8 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  dexie-react-hooks@1.1.7(@types/react@19.2.14)(dexie@4.4.2)(react@19.2.6):
+  dexie-react-hooks@4.4.0(dexie@4.4.2)(react@19.2.6):
     dependencies:
-      '@types/react': 19.2.14
       dexie: 4.4.2
       react: 19.2.6
 
@@ -5746,7 +5744,7 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  ulid@2.4.0: {}
+  ulid@3.0.2: {}
 
   unbox-primitive@1.1.0:
     dependencies:
