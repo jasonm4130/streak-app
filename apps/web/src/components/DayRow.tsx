@@ -9,7 +9,7 @@
 import { format } from 'date-fns';
 import type { DayLog, Settings } from '../types';
 import type { AdherenceBand } from '../lib/scoring';
-import { adherenceBand } from '../lib/scoring';
+import { adherenceBand, fieldHit } from '../lib/scoring';
 import { parseISO } from '../lib/dates';
 import styles from './DayRow.module.css';
 
@@ -38,7 +38,6 @@ export function DayRow({ day, score, settings, expanded, onExpand }: DayRowProps
   const band = bandFor(score);
   const pct = score.total === 0 ? 0 : Math.round((score.hit / score.total) * 100);
   const { dow, rest } = fmtDate(day.date);
-  const proteinTarget = settings.bodyWeightKg * settings.proteinFloorPerKg;
 
   return (
     <>
@@ -65,21 +64,21 @@ export function DayRow({ day, score, settings, expanded, onExpand }: DayRowProps
 
       {expanded && (
         <div className={styles.detail}>
-          <Kv k="session" v={day.session ?? null} hit={day.session === 'done' || day.session === 'modified'} />
+          <Kv k="session" v={day.session ?? null} hit={fieldHit(day, 'session', settings)} />
           <Kv
             k="sleep"
             v={day.sleepHours !== undefined ? `${day.sleepHours}h` : null}
-            hit={(day.sleepHours ?? 0) >= settings.sleepFloorHours}
+            hit={fieldHit(day, 'sleepHours', settings)}
           />
-          <Kv k="weight" v={day.weightKg !== undefined ? `${day.weightKg}kg` : null} hit={day.weightKg !== undefined} />
-          <Kv k="hydration" v={day.hydrationOk ? '✓ pale' : null} hit={!!day.hydrationOk} />
+          <Kv k="weight" v={day.weightKg !== undefined ? `${day.weightKg}kg` : null} hit={fieldHit(day, 'weightKg', settings)} />
+          <Kv k="hydration" v={day.hydrationOk ? '✓ pale' : null} hit={fieldHit(day, 'hydrationOk', settings)} />
           <Kv
             k="protein"
             v={day.proteinGrams !== undefined ? `${day.proteinGrams}g` : null}
-            hit={(day.proteinGrams ?? 0) >= proteinTarget}
+            hit={fieldHit(day, 'proteinGrams', settings)}
           />
-          <Kv k="mobility" v={day.mobilityDone ? '✓ done' : null} hit={!!day.mobilityDone} />
-          <Kv k="reading" v={day.readingDone ? '✓ done' : null} hit={!!day.readingDone} />
+          <Kv k="mobility" v={day.mobilityDone ? '✓ done' : null} hit={fieldHit(day, 'mobilityDone', settings)} />
+          <Kv k="reading" v={day.readingDone ? '✓ done' : null} hit={fieldHit(day, 'readingDone', settings)} />
           <Kv
             k="strength"
             v={day.strengthDone ? `✓${day.strengthNote ? ` · ${day.strengthNote}` : ''}` : null}
