@@ -4,7 +4,7 @@ import { blobToDataUrl, dataUrlToBlob } from './photos';
 
 export const SCHEMA_VERSION = 1;
 
-export interface ExportPhoto {
+interface ExportPhoto {
   id: string;
   takenAt: string;
   dataUrl: string;
@@ -38,7 +38,7 @@ export async function exportAll(): Promise<StreakExport> {
   };
 }
 
-export interface ImportOptions {
+interface ImportOptions {
   wipe: boolean;
 }
 

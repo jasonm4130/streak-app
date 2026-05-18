@@ -1,6 +1,6 @@
 import type { DayLog, Settings } from '../types';
 
-export interface DayScore {
+interface DayScore {
   hit: number;
   total: 6 | 7;
 }
