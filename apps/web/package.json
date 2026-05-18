@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test --config tests/e2e/playwright.config.ts",
     "deploy:preview": "wrangler deploy --env preview",
-    "deploy:production": "wrangler deploy",
+    "deploy:production": "wrangler deploy --env production",
     "generate:icon": "node scripts/generate-icon.mjs"
   },
   "dependencies": {

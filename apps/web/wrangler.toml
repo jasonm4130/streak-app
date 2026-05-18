@@ -1,4 +1,5 @@
-name = "streak-app"
+# Top-level config is shared by every named env below. No top-level routes,
+# so neither env claims a custom domain by accident.
 main = "src/worker.ts"
 compatibility_date = "2026-05-01"
 
@@ -7,11 +8,16 @@ directory = "./dist"
 not_found_handling = "single-page-application"
 binding = "ASSETS"
 
-# Production environment — bound to streak.jasonmatthew.dev once Terraform applied.
-[[routes]]
+# Production — bound to streak.jasonmatthew.dev via Terraform (infra/terraform-patch.md).
+# Deploy with `pnpm deploy:production` (wrangler deploy --env production).
+[env.production]
+name = "streak-app"
+
+[[env.production.routes]]
 pattern = "streak.jasonmatthew.dev"
 custom_domain = true
 
-# Preview environment — uses *.workers.dev only, no custom domain.
+# Preview — *.workers.dev only, no custom domain.
+# Deploy with `pnpm deploy:preview`.
 [env.preview]
 name = "streak-app-preview"
