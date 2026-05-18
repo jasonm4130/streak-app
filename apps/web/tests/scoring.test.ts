@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dayScore, adherence, adherenceBand } from '../src/lib/scoring';
+import { dayScore, adherence, adherenceBand, fieldHit } from '../src/lib/scoring';
 import type { DayLog, Settings } from '../src/types';
 
 const settings: Settings = {
@@ -113,6 +113,58 @@ describe('adherence', () => {
       readingDone: true,
     };
     expect(adherence([rest, emptyDay('2026-05-19')], settings)).toBeCloseTo(6 / 13, 4);
+  });
+});
+
+describe('fieldHit', () => {
+  it('session: done is a hit', () => {
+    const d: DayLog = { ...emptyDay('2026-05-18'), session: 'done' };
+    expect(fieldHit(d, 'session', settings)).toBe(true);
+  });
+
+  it('session: modified is a hit; skipped/undefined is a miss', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), session: 'modified' }, 'session', settings)).toBe(true);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), session: 'skipped' }, 'session', settings)).toBe(false);
+    expect(fieldHit(emptyDay('2026-05-18'), 'session', settings)).toBe(false);
+  });
+
+  it('sleepHours: at floor hits, below misses', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), sleepHours: 7 }, 'sleepHours', settings)).toBe(true);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), sleepHours: 6.5 }, 'sleepHours', settings)).toBe(false);
+    expect(fieldHit(emptyDay('2026-05-18'), 'sleepHours', settings)).toBe(false);
+  });
+
+  it('weightKg: any logged value hits; undefined misses', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), weightKg: 80 }, 'weightKg', settings)).toBe(true);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), weightKg: 0 }, 'weightKg', settings)).toBe(true);
+    expect(fieldHit(emptyDay('2026-05-18'), 'weightKg', settings)).toBe(false);
+  });
+
+  it('hydrationOk: truthy hits, falsy misses', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), hydrationOk: true }, 'hydrationOk', settings)).toBe(true);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), hydrationOk: false }, 'hydrationOk', settings)).toBe(false);
+    expect(fieldHit(emptyDay('2026-05-18'), 'hydrationOk', settings)).toBe(false);
+  });
+
+  it('proteinGrams: scales with bodyWeightKg * proteinFloorPerKg (100kg * 1.6 = 160g floor)', () => {
+    // 159 misses, 160 hits at default 100kg body weight
+    expect(fieldHit({ ...emptyDay('2026-05-18'), proteinGrams: 159 }, 'proteinGrams', settings)).toBe(false);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), proteinGrams: 160 }, 'proteinGrams', settings)).toBe(true);
+    expect(fieldHit(emptyDay('2026-05-18'), 'proteinGrams', settings)).toBe(false);
+    // Floor rescales with body weight (80kg * 1.6 = 128g)
+    const lighter: Settings = { ...settings, bodyWeightKg: 80 };
+    expect(fieldHit({ ...emptyDay('2026-05-18'), proteinGrams: 127 }, 'proteinGrams', lighter)).toBe(false);
+    expect(fieldHit({ ...emptyDay('2026-05-18'), proteinGrams: 128 }, 'proteinGrams', lighter)).toBe(true);
+  });
+
+  it('mobilityDone: truthy hits, falsy misses', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), mobilityDone: true }, 'mobilityDone', settings)).toBe(true);
+    expect(fieldHit(emptyDay('2026-05-18'), 'mobilityDone', settings)).toBe(false);
+  });
+
+  it('readingDone: truthy hits, falsy misses', () => {
+    expect(fieldHit({ ...emptyDay('2026-05-18'), readingDone: true }, 'readingDone', settings)).toBe(true);
+    expect(fieldHit(emptyDay('2026-05-18'), 'readingDone', settings)).toBe(false);
   });
 });
 

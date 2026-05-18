@@ -4,7 +4,7 @@ import { db } from '../db';
 import type { DayLog, Settings, SessionStatus } from '../types';
 import { today, formatDisplay, parseISO, toISO } from '../lib/dates';
 import { weekFor } from '../lib/week';
-import { dayScore, adherence, adherenceBand } from '../lib/scoring';
+import { dayScore, adherence, adherenceBand, fieldHit } from '../lib/scoring';
 import { downsize } from '../lib/photos';
 import { ulid } from 'ulid';
 import { AdherencePill } from '../components/AdherencePill';
@@ -78,7 +78,7 @@ export function Today({ settings }: { settings: Settings }) {
       />
 
       {!day.restDay && (
-        <FieldRow label="session" status={hitStatus(day.session === 'done' || day.session === 'modified')}>
+        <FieldRow label="session" status={hitStatus(fieldHit(day, 'session', settings))}>
           <ButtonGroup<SessionStatus>
             value={day.session}
             options={SESSION_OPTIONS}
@@ -89,7 +89,7 @@ export function Today({ settings }: { settings: Settings }) {
 
       <FieldRow
         label={`sleep ≥${settings.sleepFloorHours}h`}
-        status={hitStatus((day.sleepHours ?? 0) >= settings.sleepFloorHours)}
+        status={hitStatus(fieldHit(day, 'sleepHours', settings))}
       >
         <NumberInput
           value={day.sleepHours}
@@ -102,7 +102,7 @@ export function Today({ settings }: { settings: Settings }) {
         />
       </FieldRow>
 
-      <FieldRow label="weight" status={hitStatus(day.weightKg !== undefined)}>
+      <FieldRow label="weight" status={hitStatus(fieldHit(day, 'weightKg', settings))}>
         <NumberInput
           value={day.weightKg}
           onChange={(n) => patch({ weightKg: n })}
@@ -114,15 +114,13 @@ export function Today({ settings }: { settings: Settings }) {
         />
       </FieldRow>
 
-      <FieldRow label="hydration ✓ pale" status={hitStatus(!!day.hydrationOk)}>
+      <FieldRow label="hydration ✓ pale" status={hitStatus(fieldHit(day, 'hydrationOk', settings))}>
         <ToggleRow value={!!day.hydrationOk} onChange={(v) => patch({ hydrationOk: v })} data-testid="today-hydration" />
       </FieldRow>
 
       <FieldRow
         label={`protein ≥${Math.round(settings.bodyWeightKg * settings.proteinFloorPerKg)}g`}
-        status={hitStatus(
-          (day.proteinGrams ?? 0) >= settings.bodyWeightKg * settings.proteinFloorPerKg,
-        )}
+        status={hitStatus(fieldHit(day, 'proteinGrams', settings))}
       >
         <NumberInput
           value={day.proteinGrams}
@@ -135,11 +133,11 @@ export function Today({ settings }: { settings: Settings }) {
         />
       </FieldRow>
 
-      <FieldRow label="mobility 5min" status={hitStatus(!!day.mobilityDone)}>
+      <FieldRow label="mobility 5min" status={hitStatus(fieldHit(day, 'mobilityDone', settings))}>
         <ToggleRow value={!!day.mobilityDone} onChange={(v) => patch({ mobilityDone: v })} data-testid="today-mobility" />
       </FieldRow>
 
-      <FieldRow label="reading 10pg" status={hitStatus(!!day.readingDone)}>
+      <FieldRow label="reading 10pg" status={hitStatus(fieldHit(day, 'readingDone', settings))}>
         <ToggleRow value={!!day.readingDone} onChange={(v) => patch({ readingDone: v })} data-testid="today-reading" />
       </FieldRow>
 

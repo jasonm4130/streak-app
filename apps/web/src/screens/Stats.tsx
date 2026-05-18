@@ -4,7 +4,8 @@ import { subDays } from 'date-fns';
 import { db } from '../db';
 import type { DayLog, Settings } from '../types';
 import { today, parseISO, toISO } from '../lib/dates';
-import { dayScore, adherenceBand } from '../lib/scoring';
+import type { ScorableField } from '../lib/scoring';
+import { dayScore, adherenceBand, fieldHit } from '../lib/scoring';
 import { weekFor } from '../lib/week';
 import { WeightChart } from '../components/WeightChart';
 import { Sparkline } from '../components/Sparkline';
@@ -18,7 +19,7 @@ import {
   WEIGHT_WINDOW_DAYS,
 } from '../lib/constants';
 
-const FIELD_KEYS: { key: keyof DayLog; label: string }[] = [
+const FIELD_KEYS: { key: ScorableField; label: string }[] = [
   { key: 'session', label: 'session' },
   { key: 'sleepHours', label: 'sleep' },
   { key: 'weightKg', label: 'weight' },
@@ -111,19 +112,6 @@ function rollingAvg(points: { date: string; kg: number }[], window: number) {
     const avg = slice.reduce((a, p) => a + p.kg, 0) / slice.length;
     return { date: points[i].date, kg: avg };
   });
-}
-
-function fieldHit(d: DayLog, key: keyof DayLog, s: Settings): boolean {
-  switch (key) {
-    case 'session': return d.session === 'done' || d.session === 'modified';
-    case 'sleepHours': return (d.sleepHours ?? 0) >= s.sleepFloorHours;
-    case 'weightKg': return d.weightKg !== undefined;
-    case 'hydrationOk': return !!d.hydrationOk;
-    case 'proteinGrams': return (d.proteinGrams ?? 0) >= s.bodyWeightKg * s.proteinFloorPerKg;
-    case 'mobilityDone': return !!d.mobilityDone;
-    case 'readingDone': return !!d.readingDone;
-    default: return false;
-  }
 }
 
 function aggregateStrengthPerWeek(allDays: DayLog[], settings: Settings) {
