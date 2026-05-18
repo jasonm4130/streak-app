@@ -1,34 +1,49 @@
 # streak
 
-Personal habit + adherence tracker for the 15-week Sydney Marathon prep block (race day 2026-08-30). Single user, single device, local-first PWA. Deployed as a Cloudflare Worker with Static Assets at `streak.jasonmatthew.dev`.
+Personal habit-tracking PWA — local-first, offline, no backend.
 
-See `docs/superpowers/specs/2026-05-17-streak-app-design.md` for the design spec and `RESEARCH.md` for the underlying training-science research.
+> Visit the live app at https://streak.jasonmatthew.dev
 
-## Develop
+## What + why
 
-```bash
-pnpm install
-pnpm dev          # vite dev server on http://localhost:5173
+A single-user habit and adherence tracker built for the 15-week Sydney Marathon prep block. Everything runs in the browser, data persists in IndexedDB on whatever device installed the PWA, and there is no auth or server-side state to manage. Built so the author owns the data and the deployment.
+
+## Tech stack
+
+- React 19
+- Vite 8
+- TypeScript 6
+- Dexie 4 (IndexedDB)
+- Zustand 5
+- Cloudflare Workers + Static Assets
+- Vitest 4
+- Playwright
+
+## Project layout
+
+```text
+apps/web/         Vite + React PWA, deployed as a Cloudflare Worker
+  src/            App code (screens, components, store, db, lib)
+  tests/          Vitest unit tests + Playwright e2e
+.github/          CI workflow + Dependabot config
 ```
 
-## Test
+## Local dev
 
 ```bash
-pnpm test         # vitest unit tests
-pnpm e2e          # playwright happy-path
-pnpm typecheck
-pnpm lint
+pnpm install && pnpm dev
 ```
 
 ## Deploy
 
 ```bash
-pnpm deploy:preview     # *.workers.dev preview env
-pnpm deploy:production  # streak.jasonmatthew.dev
+pnpm deploy:production
 ```
 
-First deploy needs `wrangler login` and the Terraform patch in `infra/terraform-patch.md` applied in your Cloudflare Terraform repo.
+## License
 
-## Data
+[MIT](./LICENSE).
 
-All data lives in IndexedDB on whatever device installed the PWA. Use Settings → Export JSON to back up; save the file to iCloud Drive periodically. Lose the phone without an export = lose the data.
+---
+
+This is a personal project; no PRs expected.
