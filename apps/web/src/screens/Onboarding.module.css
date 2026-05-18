@@ -1,0 +1,41 @@
+.page {
+  padding: var(--space-5);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.title {
+  font: inherit;
+  font-size: 18px;
+  margin-bottom: var(--space-4);
+}
+
+.hint {
+  color: var(--fg-muted);
+  margin-bottom: var(--space-3);
+}
+
+.dateInput {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-3);
+  color: var(--fg);
+  min-height: var(--tap);
+}
+
+.actionButton {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--fg-muted);
+}
+
+.actionButton.ready {
+  color: var(--green);
+}
+
+.doneButton {
+  display: block;
+}
