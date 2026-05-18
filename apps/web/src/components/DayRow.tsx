@@ -47,6 +47,7 @@ export function DayRow({ day, score, settings, expanded, onExpand }: DayRowProps
         className={`${styles.row} ${styles[band]} ${expanded ? styles.expanded : ''}`}
         onClick={onExpand}
         aria-expanded={!!expanded}
+        data-testid={`history-row-${day.date}`}
       >
         <span className={styles.bar} aria-hidden />
         <span className={styles.date}>

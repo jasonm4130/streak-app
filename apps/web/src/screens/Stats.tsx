@@ -53,7 +53,7 @@ export function Stats({ settings }: { settings: Settings }) {
   return (
     <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
       <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+        <h2 data-testid="stats-section-weight" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
           WEIGHT — last 60 days
         </h2>
         <WeightChart
@@ -64,14 +64,14 @@ export function Stats({ settings }: { settings: Settings }) {
       </section>
 
       <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+        <h2 data-testid="stats-section-adherence" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
           ADHERENCE — last 28 days
         </h2>
         <Sparkline values={sparkValues} height={48} bandFn={(v) => adherenceBand(v)} />
       </section>
 
       <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+        <h2 data-testid="stats-section-fields" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
           PER-FIELD HIT % — last 28 days
         </h2>
         {fieldStats.map((s) => (
@@ -86,7 +86,7 @@ export function Stats({ settings }: { settings: Settings }) {
       </section>
 
       <section>
-        <h2 style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+        <h2 data-testid="stats-section-strength" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
           STRENGTH — sessions per week (target 2)
         </h2>
         <WeeklyTally weeks={weeks} target={2} />
