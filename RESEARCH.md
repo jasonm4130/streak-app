@@ -87,18 +87,16 @@ Per Apr 2026 Cloudflare docs + community consensus: **Workers with Static Assets
 - All new platform features land on Workers first or only: Secrets Store, Workflows, Containers, Durable Objects, Cron Triggers, Queues, Email Workers, Rate Limiting, full Workers Logs, source maps, gradual deployments
 - For static-first projects, migration is a one-line config swap
 
-Stack alignment with existing Jason infra (`jasonm4130-cf` Terraform repo, `Adaptive-Training` monorepo):
+Stack alignment with existing infra:
 - Cloudflare account fully wired via Terraform — Workers, D1, KV, R2 patterns all established
-- `endurebyte` D1 + KV namespace already provisioned (candidate for reuse if this is the unfinished fitness project)
 - pnpm + Turbo + `apps/web` monorepo shape is the established frontend pattern
-- Adaptive-Training already uses `deploy:preview` / `deploy:production` Turbo tasks targeting Workers
 - Drizzle ORM is the established D1 ORM in this codebase
 
 ### Concrete unlocks for the streak app
 
 1. **One deployment unit.** Static PWA + any future API endpoints (Strava webhook, daily-summary endpoint, backup-sync) ship as a single Worker. No Pages-project + separate Worker split.
 2. **Cron Triggers** — Pages can't do these. Free scheduled tasks: daily reminder push, weekly photo nudge, rolling 7-day weight average computation, automated weekly adherence summary.
-3. **Native D1 + KV bindings** via `wrangler.toml`. Can reuse the existing `endurebyte` D1 instance for backup/sync, or provision a new `streak` D1.
+3. **Native D1 + KV bindings** via `wrangler.toml`. Provision a `streak` D1 (or reuse an existing instance) for backup/sync.
 
 ### Worker config defaults the app needs
 

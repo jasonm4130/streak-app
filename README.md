@@ -27,7 +27,7 @@ pnpm deploy:preview     # *.workers.dev preview env
 pnpm deploy:production  # streak.jasonmatthew.dev
 ```
 
-First deploy needs `wrangler login` and the Terraform patch in `infra/terraform-patch.md` applied in the `jasonm4130-cf` repo.
+First deploy needs `wrangler login` and the Terraform patch in `infra/terraform-patch.md` applied in your Cloudflare Terraform repo.
 
 ## Data
 
