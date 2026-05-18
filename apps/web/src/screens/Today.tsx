@@ -14,6 +14,7 @@ import { NumberInput } from '../components/NumberInput';
 import { ToggleRow } from '../components/ToggleRow';
 import { NoteInput } from '../components/NoteInput';
 import { subDays } from 'date-fns';
+import { ADHERENCE_WINDOW_DAYS } from '../lib/constants';
 
 const SESSION_OPTIONS = [
   { value: 'done' as const, label: 'done' },
@@ -25,10 +26,10 @@ export function Today({ settings }: { settings: Settings }) {
   const date = today();
   const day = useLiveQuery(() => db.days.get(date), [date]) ?? { date, updatedAt: 0 };
 
-  // 28-day window ending today, inclusive
+  // Rolling adherence window ending today, inclusive
   const days28 = useLiveQuery(
     async () => {
-      const start = subDays(parseISO(date), 27);
+      const start = subDays(parseISO(date), ADHERENCE_WINDOW_DAYS - 1);
       return db.days
         .where('date')
         .between(toISO(start), date, true, true)
@@ -54,7 +55,7 @@ export function Today({ settings }: { settings: Settings }) {
   }
 
   async function setPhoto(file: File) {
-    const downsized = await downsize(file, 800, 0.8);
+    const downsized = await downsize(file);
     const id = ulid();
     await db.photos.put({ id, blob: downsized, takenAt: date });
     await patch({ photoBlobId: id });
@@ -67,7 +68,7 @@ export function Today({ settings }: { settings: Settings }) {
         <div style={{ color: 'var(--fg-muted)', fontSize: 12, marginBottom: 'var(--space-3)' }}>
           {weekLabel()} · score {score.hit}/{score.total}
         </div>
-        <AdherencePill value={a28} band={band} label="28d" />
+        <AdherencePill value={a28} band={band} label={`${ADHERENCE_WINDOW_DAYS}d`} />
       </header>
 
       <ToggleRow

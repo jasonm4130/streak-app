@@ -10,6 +10,13 @@ import { WeightChart } from '../components/WeightChart';
 import { Sparkline } from '../components/Sparkline';
 import { HorizontalBar } from '../components/HorizontalBar';
 import { WeeklyTally } from '../components/WeeklyTally';
+import {
+  ADHERENCE_WINDOW_DAYS,
+  STRENGTH_TARGET_PER_WEEK,
+  TOTAL_WEEKS,
+  WEIGHT_ROLLING_AVG_DAYS,
+  WEIGHT_WINDOW_DAYS,
+} from '../lib/constants';
 
 const FIELD_KEYS: { key: keyof DayLog; label: string }[] = [
   { key: 'session', label: 'session' },
@@ -24,37 +31,40 @@ const FIELD_KEYS: { key: keyof DayLog; label: string }[] = [
 export function Stats({ settings }: { settings: Settings }) {
   const days28 = useLiveQuery(async () => {
     const end = today();
-    const start = toISO(subDays(parseISO(end), 27));
+    const start = toISO(subDays(parseISO(end), ADHERENCE_WINDOW_DAYS - 1));
     return db.days.where('date').between(start, end, true, true).sortBy('date');
   }) ?? [];
 
   const allDays = useLiveQuery(() => db.days.orderBy('date').toArray()) ?? [];
 
-  // Weight scatter + 7-day rolling avg over the last 60 days
-  const weightWindow = allDays.filter((d) => d.weightKg !== undefined).slice(-60);
-  const rolling = rollingAvg(weightWindow.map((d) => ({ date: d.date, kg: d.weightKg! })), 7);
+  // Weight scatter + rolling avg over the recent window
+  const weightWindow = allDays.filter((d) => d.weightKg !== undefined).slice(-WEIGHT_WINDOW_DAYS);
+  const rolling = rollingAvg(
+    weightWindow.map((d) => ({ date: d.date, kg: d.weightKg! })),
+    WEIGHT_ROLLING_AVG_DAYS,
+  );
 
-  // 28-day adherence sparkline values (one per day, scored)
+  // Adherence sparkline values (one per day, scored)
   const sparkValues = days28.map((d) => {
     const s = dayScore(d, settings);
     return s.hit / s.total;
   });
 
-  // Per-field 28-day hit %
+  // Per-field hit % over the adherence window
   const fieldStats = FIELD_KEYS.map(({ key, label }) => {
     const hits = days28.reduce((acc, d) => acc + (fieldHit(d, key, settings) ? 1 : 0), 0);
     const denom = days28.length || 1;
     return { label, value: hits / denom };
   });
 
-  // Weekly strength tally — 15 weeks
+  // Weekly strength tally — full prep block
   const weeks = aggregateStrengthPerWeek(allDays, settings);
 
   return (
     <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
       <section style={{ marginBottom: 'var(--space-5)' }}>
         <h2 data-testid="stats-section-weight" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
-          WEIGHT — last 60 days
+          WEIGHT — last {WEIGHT_WINDOW_DAYS} days
         </h2>
         <WeightChart
           points={weightWindow.map((d) => ({ date: d.date, kg: d.weightKg! }))}
@@ -65,14 +75,14 @@ export function Stats({ settings }: { settings: Settings }) {
 
       <section style={{ marginBottom: 'var(--space-5)' }}>
         <h2 data-testid="stats-section-adherence" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
-          ADHERENCE — last 28 days
+          ADHERENCE — last {ADHERENCE_WINDOW_DAYS} days
         </h2>
         <Sparkline values={sparkValues} height={48} bandFn={(v) => adherenceBand(v)} />
       </section>
 
       <section style={{ marginBottom: 'var(--space-5)' }}>
         <h2 data-testid="stats-section-fields" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
-          PER-FIELD HIT % — last 28 days
+          PER-FIELD HIT % — last {ADHERENCE_WINDOW_DAYS} days
         </h2>
         {fieldStats.map((s) => (
           <HorizontalBar
@@ -87,9 +97,9 @@ export function Stats({ settings }: { settings: Settings }) {
 
       <section>
         <h2 data-testid="stats-section-strength" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
-          STRENGTH — sessions per week (target 2)
+          STRENGTH — sessions per week (target {STRENGTH_TARGET_PER_WEEK})
         </h2>
-        <WeeklyTally weeks={weeks} target={2} />
+        <WeeklyTally weeks={weeks} target={STRENGTH_TARGET_PER_WEEK} />
       </section>
     </div>
   );
@@ -126,7 +136,7 @@ function aggregateStrengthPerWeek(allDays: DayLog[], settings: Settings) {
     buckets.set(w.weekNumber, (buckets.get(w.weekNumber) ?? 0) + 1);
   }
   const out: { weekNumber: number; sessions: number }[] = [];
-  for (let i = 1; i <= 15; i++) {
+  for (let i = 1; i <= TOTAL_WEEKS; i++) {
     out.push({ weekNumber: i, sessions: buckets.get(i) ?? 0 });
   }
   return out;

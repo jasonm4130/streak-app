@@ -1,11 +1,10 @@
 import { differenceInCalendarDays, addDays } from 'date-fns';
+import { TOTAL_WEEKS } from './constants';
 
 export interface WeekInfo {
   weekNumber: number | 'pre' | 'post';
   dayOfWeek: number; // 1 (Mon) .. 7 (Sun); 0 only in 'pre'/'post' edge irrelevant
 }
-
-const TOTAL_WEEKS = 15;
 
 // Race week (week 15) ends on the marathon Sunday. Week N starts on the Monday.
 function week1Start(marathonDate: Date): Date {

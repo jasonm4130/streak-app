@@ -7,9 +7,10 @@ import type { Settings } from '../types';
 import { today, parseISO, toISO } from '../lib/dates';
 import { dayScore } from '../lib/scoring';
 import { DayRow } from '../components/DayRow';
+import { ADHERENCE_WINDOW_DAYS } from '../lib/constants';
 
 export function History({ settings }: { settings: Settings }) {
-  const [windowDays, setWindowDays] = useState(28);
+  const [windowDays, setWindowDays] = useState(ADHERENCE_WINDOW_DAYS);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const days = useLiveQuery(
@@ -40,7 +41,7 @@ export function History({ settings }: { settings: Settings }) {
       ))}
 
       <button
-        onClick={() => setWindowDays((w) => w + 28)}
+        onClick={() => setWindowDays((w) => w + ADHERENCE_WINDOW_DAYS)}
         style={{
           marginTop: 'var(--space-5)',
           padding: 'var(--space-3) var(--space-4)',
