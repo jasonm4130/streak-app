@@ -65,14 +65,6 @@ export function Settings({ settings }: { settings: SettingsT }) {
         <NumberInput value={settings.proteinFloorPerKg} onChange={(n) => n !== undefined && patch({ proteinFloorPerKg: n })} step={0.1} min={0.5} max={3} suffix="g/kg" />
       </FieldRow>
 
-      <FieldRow label="mobility floor" status="pending">
-        <NumberInput value={settings.mobilityFloorMin} onChange={(n) => n !== undefined && patch({ mobilityFloorMin: n })} step={1} min={0} max={60} suffix="min" />
-      </FieldRow>
-
-      <FieldRow label="reading floor" status="pending">
-        <NumberInput value={settings.readingFloorPages} onChange={(n) => n !== undefined && patch({ readingFloorPages: n })} step={1} min={0} max={100} suffix="pg" />
-      </FieldRow>
-
       <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />
 
       <button
