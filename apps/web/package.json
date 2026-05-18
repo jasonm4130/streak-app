@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test --config tests/e2e/playwright.config.ts",
+    "knip": "knip",
     "deploy:preview": "wrangler deploy --env preview",
     "deploy:production": "wrangler deploy --env production",
     "generate:icon": "node scripts/generate-icon.mjs"
@@ -39,6 +40,7 @@
     "fake-indexeddb": "^6.0.0",
     "globals": "^17.6.0",
     "happy-dom": "^20.9.0",
+    "knip": "^6.14.1",
     "sharp": "^0.34.5",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.59.3",
