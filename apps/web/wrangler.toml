@@ -1,5 +1,8 @@
 # Top-level config is shared by every named env below. No top-level routes,
-# so neither env claims a custom domain by accident.
+# so neither env claims a custom domain by accident. Top-level `name` exists
+# only to group preview/production siblings in the Cloudflare dashboard; the
+# per-env `name` values below override it for actual deploys.
+name = "streak-app"
 main = "src/worker.ts"
 compatibility_date = "2026-05-01"
 
