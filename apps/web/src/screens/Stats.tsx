@@ -11,6 +11,7 @@ import { WeightChart } from '../components/WeightChart';
 import { Sparkline } from '../components/Sparkline';
 import { HorizontalBar } from '../components/HorizontalBar';
 import { WeeklyTally } from '../components/WeeklyTally';
+import { SectionHeading } from '../components/SectionHeading';
 import {
   ADHERENCE_WINDOW_DAYS,
   STRENGTH_TARGET_PER_WEEK,
@@ -18,6 +19,7 @@ import {
   WEIGHT_ROLLING_AVG_DAYS,
   WEIGHT_WINDOW_DAYS,
 } from '../lib/constants';
+import styles from './Stats.module.css';
 
 const FIELD_KEYS: { key: ScorableField; label: string }[] = [
   { key: 'session', label: 'session' },
@@ -62,11 +64,11 @@ export function Stats({ settings }: { settings: Settings }) {
   const weeks = aggregateStrengthPerWeek(allDays, settings);
 
   return (
-    <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
-      <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 data-testid="stats-section-weight" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+    <div className={styles.page}>
+      <section className={styles.section}>
+        <SectionHeading data-testid="stats-section-weight">
           WEIGHT — last {WEIGHT_WINDOW_DAYS} days
-        </h2>
+        </SectionHeading>
         <WeightChart
           points={weightWindow.map((d) => ({ date: d.date, kg: d.weightKg! }))}
           rollingAvg={rolling}
@@ -74,17 +76,17 @@ export function Stats({ settings }: { settings: Settings }) {
         />
       </section>
 
-      <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 data-testid="stats-section-adherence" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+      <section className={styles.section}>
+        <SectionHeading data-testid="stats-section-adherence">
           ADHERENCE — last {ADHERENCE_WINDOW_DAYS} days
-        </h2>
+        </SectionHeading>
         <Sparkline values={sparkValues} height={48} bandFn={(v) => adherenceBand(v)} />
       </section>
 
-      <section style={{ marginBottom: 'var(--space-5)' }}>
-        <h2 data-testid="stats-section-fields" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+      <section className={styles.section}>
+        <SectionHeading data-testid="stats-section-fields">
           PER-FIELD HIT % — last {ADHERENCE_WINDOW_DAYS} days
-        </h2>
+        </SectionHeading>
         {fieldStats.map((s) => (
           <HorizontalBar
             key={s.label}
@@ -97,9 +99,9 @@ export function Stats({ settings }: { settings: Settings }) {
       </section>
 
       <section>
-        <h2 data-testid="stats-section-strength" style={{ font: 'inherit', fontSize: 12, color: 'var(--fg-muted)', letterSpacing: 1, marginBottom: 'var(--space-2)' }}>
+        <SectionHeading data-testid="stats-section-strength">
           STRENGTH — sessions per week (target {STRENGTH_TARGET_PER_WEEK})
-        </h2>
+        </SectionHeading>
         <WeeklyTally weeks={weeks} target={STRENGTH_TARGET_PER_WEEK} />
       </section>
     </div>
