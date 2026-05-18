@@ -8,6 +8,7 @@ import { today, parseISO, toISO } from '../lib/dates';
 import { dayScore } from '../lib/scoring';
 import { DayRow } from '../components/DayRow';
 import { ADHERENCE_WINDOW_DAYS } from '../lib/constants';
+import styles from './History.module.css';
 
 export function History({ settings }: { settings: Settings }) {
   const [windowDays, setWindowDays] = useState(ADHERENCE_WINDOW_DAYS);
@@ -23,8 +24,8 @@ export function History({ settings }: { settings: Settings }) {
   ) ?? [];
 
   return (
-    <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--space-3)', color: 'var(--fg-muted)' }}>
+    <div className={styles.page}>
+      <div className={styles.summary}>
         <span>last {windowDays} days</span>
         <span>{days.length} logged</span>
       </div>
@@ -42,14 +43,7 @@ export function History({ settings }: { settings: Settings }) {
 
       <button
         onClick={() => setWindowDays((w) => w + ADHERENCE_WINDOW_DAYS)}
-        style={{
-          marginTop: 'var(--space-5)',
-          padding: 'var(--space-3) var(--space-4)',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--r-md)',
-          color: 'var(--fg-muted)',
-          width: '100%',
-        }}
+        className={styles.loadMore}
       >
         load older →
       </button>

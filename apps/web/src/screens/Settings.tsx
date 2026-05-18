@@ -5,6 +5,7 @@ import type { Settings as SettingsT } from '../types';
 import { exportAll, importAll, type StreakExport } from '../lib/export';
 import { NumberInput } from '../components/NumberInput';
 import { FieldRow } from '../components/FieldRow';
+import styles from './Settings.module.css';
 
 export function Settings({ settings }: { settings: SettingsT }) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -43,7 +44,7 @@ export function Settings({ settings }: { settings: SettingsT }) {
   }
 
   return (
-    <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
+    <div className={styles.page}>
       <FieldRow label="body weight" status="pending">
         <NumberInput value={settings.bodyWeightKg} onChange={(n) => n !== undefined && patch({ bodyWeightKg: n })} step={0.1} min={20} max={300} suffix="kg" />
       </FieldRow>
@@ -53,7 +54,7 @@ export function Settings({ settings }: { settings: SettingsT }) {
           type="date"
           value={settings.marathonDate}
           onChange={(e) => patch({ marathonDate: e.target.value })}
-          style={{ background: 'var(--bg-elev)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', padding: 'var(--space-2) var(--space-3)', color: 'var(--fg)', minHeight: 'var(--tap)' }}
+          className={styles.dateInput}
         />
       </FieldRow>
 
@@ -65,28 +66,28 @@ export function Settings({ settings }: { settings: SettingsT }) {
         <NumberInput value={settings.proteinFloorPerKg} onChange={(n) => n !== undefined && patch({ proteinFloorPerKg: n })} step={0.1} min={0.5} max={3} suffix="g/kg" />
       </FieldRow>
 
-      <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />
+      <hr className={styles.separator} />
 
       <button
         onClick={doExport}
         data-testid="settings-export"
-        style={{ display: 'block', width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', color: 'var(--green)', marginBottom: 'var(--space-3)' }}
+        className={styles.exportButton}
       >
         export JSON ↓
       </button>
 
-      <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
+      <label className={styles.wipeBeforeImport}>
         <input type="checkbox" checked={wipeOnImport} onChange={(e) => setWipeOnImport(e.target.checked)} />
         wipe before import (destructive)
       </label>
-      <input ref={fileRef} type="file" accept="application/json" onChange={onFile} style={{ marginBottom: 'var(--space-5)' }} />
+      <input ref={fileRef} type="file" accept="application/json" onChange={onFile} className={styles.fileInput} />
 
-      <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />
+      <hr className={styles.separator} />
 
       <button
         onClick={wipeAll}
         data-testid="settings-wipe"
-        style={{ display: 'block', width: '100%', padding: 'var(--space-3)', border: '1px solid var(--red)', borderRadius: 'var(--r-md)', color: 'var(--red)' }}
+        className={styles.wipeButton}
       >
         wipe all data
       </button>

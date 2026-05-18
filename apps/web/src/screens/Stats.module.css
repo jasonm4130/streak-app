@@ -1,0 +1,9 @@
+.page {
+  padding: var(--space-4);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: var(--space-5);
+}

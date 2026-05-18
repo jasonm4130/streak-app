@@ -15,6 +15,7 @@ import { ToggleRow } from '../components/ToggleRow';
 import { NoteInput } from '../components/NoteInput';
 import { subDays } from 'date-fns';
 import { ADHERENCE_WINDOW_DAYS } from '../lib/constants';
+import styles from './Today.module.css';
 
 const SESSION_OPTIONS = [
   { value: 'done' as const, label: 'done' },
@@ -62,10 +63,10 @@ export function Today({ settings }: { settings: Settings }) {
   }
 
   return (
-    <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
-      <header style={{ marginBottom: 'var(--space-4)' }}>
-        <div style={{ fontSize: 16, fontWeight: 600 }}>{formatDisplay(date)}</div>
-        <div style={{ color: 'var(--fg-muted)', fontSize: 12, marginBottom: 'var(--space-3)' }}>
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <div className={styles.date}>{formatDisplay(date)}</div>
+        <div className={styles.subtitle}>
           {weekLabel()} · score {score.hit}/{score.total}
         </div>
         <AdherencePill value={a28} band={band} label={`${ADHERENCE_WINDOW_DAYS}d`} />
@@ -141,7 +142,7 @@ export function Today({ settings }: { settings: Settings }) {
         <ToggleRow value={!!day.readingDone} onChange={(v) => patch({ readingDone: v })} data-testid="today-reading" />
       </FieldRow>
 
-      <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />
+      <hr className={styles.separator} />
 
       <FieldRow label="strength (weekly 2×)" status={day.strengthDone ? 'hit' : 'pending'}>
         <ToggleRow value={!!day.strengthDone} onChange={(v) => patch({ strengthDone: v })} />
