@@ -7,7 +7,7 @@ import { blobToDataUrl, dataUrlToBlob } from './photos';
  * reject dumps whose version doesn't match the current one rather than try
  * to migrate them in-flight.
  */
-export const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 1;
 
 interface ExportPhoto {
   id: string;
