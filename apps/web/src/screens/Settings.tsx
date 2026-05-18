@@ -93,6 +93,7 @@ export function Settings({ settings }: { settings: SettingsT }) {
 
       <button
         onClick={wipeAll}
+        data-testid="settings-wipe"
         style={{ display: 'block', width: '100%', padding: 'var(--space-3)', border: '1px solid var(--red)', borderRadius: 'var(--r-md)', color: 'var(--red)' }}
       >
         wipe all data
