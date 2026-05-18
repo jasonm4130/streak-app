@@ -17,11 +17,15 @@ interface NoteInputProps {
 
 export function NoteInput({ value, onChange, placeholder }: NoteInputProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
+  // Mirror `value` into local state during render (React's recommended
+  // "adjusting state on prop change" pattern) so we can let the user type
+  // freely while still picking up upstream resets without a layout flash.
   const [text, setText] = useState<string>(value ?? '');
-
-  useEffect(() => {
+  const [lastValue, setLastValue] = useState<string | undefined>(value);
+  if (value !== lastValue) {
+    setLastValue(value);
     setText(value ?? '');
-  }, [value]);
+  }
 
   useEffect(() => {
     const el = ref.current;

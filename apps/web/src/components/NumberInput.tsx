@@ -7,7 +7,7 @@
  *   <NumberInput value={day.sleepHours} onChange={(n) => patch({ sleepHours: n })}
  *                step={0.25} min={0} max={16} suffix="h" />
  */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './NumberInput.module.css';
 
 interface NumberInputProps {
@@ -32,11 +32,15 @@ export function NumberInput({
   ...rest
 }: NumberInputProps) {
   // Keep a local string so users can type things like "7." without snapping to 7.
+  // Mirror `value` into local state during render (React's recommended
+  // "adjusting state on prop change" pattern) — avoids the cascading-render
+  // hazard of doing this in useEffect.
   const [text, setText] = useState<string>(value === undefined ? '' : String(value));
-
-  useEffect(() => {
+  const [lastValue, setLastValue] = useState<number | undefined>(value);
+  if (value !== lastValue) {
+    setLastValue(value);
     setText(value === undefined ? '' : String(value));
-  }, [value]);
+  }
 
   function commit(raw: string) {
     if (raw.trim() === '') {
