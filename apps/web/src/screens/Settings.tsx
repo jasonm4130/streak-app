@@ -1,4 +1,7 @@
-// apps/web/src/screens/Settings.tsx
+/**
+ * Settings screen: edit body weight, marathon date, and the protein/sleep
+ * floors; export/import the full Dexie database as JSON.
+ */
 import { useRef, useState } from 'react';
 import { db } from '../db';
 import type { Settings as SettingsT } from '../types';

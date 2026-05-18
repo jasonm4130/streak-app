@@ -1,5 +1,6 @@
 import { PHOTO_JPEG_QUALITY, PHOTO_MAX_EDGE_PX } from './constants';
 
+/** Read a Blob as a base64 `data:` URL (for JSON-serialisable export). */
 export async function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -9,6 +10,7 @@ export async function blobToDataUrl(blob: Blob): Promise<string> {
   });
 }
 
+/** Inverse of `blobToDataUrl` — decode a `data:` URL back to a Blob (round-trip on import). */
 export async function dataUrlToBlob(url: string): Promise<Blob> {
   const res = await fetch(url);
   return res.blob();

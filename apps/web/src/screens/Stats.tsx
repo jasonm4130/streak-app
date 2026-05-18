@@ -1,4 +1,8 @@
-// apps/web/src/screens/Stats.tsx
+/**
+ * Stats screen: weight chart, per-field sparklines/bars, and a weekly tally
+ * of hit-rates across the plan. Reads the last 90 days from Dexie and derives
+ * everything via `lib/scoring`.
+ */
 import { useLiveQuery } from 'dexie-react-hooks';
 import { subDays } from 'date-fns';
 import { db } from '../db';

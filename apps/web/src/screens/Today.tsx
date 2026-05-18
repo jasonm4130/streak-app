@@ -1,4 +1,9 @@
-// apps/web/src/screens/Today.tsx
+/**
+ * Today screen: the main daily-logging surface. Reads today's `DayLog` from
+ * Dexie (creating one on first interaction), shows the adherence pill for
+ * the rolling window, and renders the seven scorable fields plus the optional
+ * strength note and progress photo.
+ */
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 import type { DayLog, Settings, SessionStatus } from '../types';

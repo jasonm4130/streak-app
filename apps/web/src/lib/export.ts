@@ -2,6 +2,11 @@ import { db } from '../db';
 import type { DayLog, Photo, Settings } from '../types';
 import { blobToDataUrl, dataUrlToBlob } from './photos';
 
+/**
+ * Versioned dump format. Bumped on breaking schema changes; `importAll` will
+ * reject dumps whose version doesn't match the current one rather than try
+ * to migrate them in-flight.
+ */
 export const SCHEMA_VERSION = 1;
 
 interface ExportPhoto {
@@ -10,6 +15,7 @@ interface ExportPhoto {
   dataUrl: string;
 }
 
+/** Self-contained backup payload: settings + all days + all photos (as data URLs). */
 export interface StreakExport {
   schema: number;
   exportedAt: string;
@@ -18,6 +24,7 @@ export interface StreakExport {
   photos: ExportPhoto[];
 }
 
+/** Dump the full Dexie database to a JSON-serialisable object. Photos are inlined as data URLs. */
 export async function exportAll(): Promise<StreakExport> {
   const settings = (await db.settings.get('singleton')) ?? null;
   const days = await db.days.toArray();
@@ -42,6 +49,15 @@ interface ImportOptions {
   wipe: boolean;
 }
 
+/**
+ * Import a dump back into the database.
+ *
+ * Merge semantics for days: newer `updatedAt` wins per-date. A missing
+ * `updatedAt` is treated as 0, so a dump row will overwrite a local row
+ * with no timestamp but not one with any timestamp. Settings and photos
+ * are unconditional `put`s. With `opts.wipe`, all tables are cleared first
+ * so the import is an exact restore rather than a merge.
+ */
 export async function importAll(dump: StreakExport, opts: ImportOptions): Promise<void> {
   if (dump.schema !== SCHEMA_VERSION) {
     throw new Error(`unsupported schema version: ${dump.schema}`);

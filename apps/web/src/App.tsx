@@ -1,3 +1,12 @@
+/**
+ * Root component: tab router + onboarding gate.
+ *
+ * The `LOADING` Symbol is `useLiveQuery`'s `defaultResult` so we can
+ * distinguish "query still loading" from "query resolved to undefined, i.e.
+ * no settings row exists → show onboarding". Without the sentinel both states
+ * surface as `undefined` and the onboarding screen flashes on every reload
+ * before the real settings come back (see commit 759bd8a).
+ */
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from './db';
 import { useApp } from './store';
@@ -8,9 +17,6 @@ import { Stats } from './screens/Stats';
 import { Settings } from './screens/Settings';
 import { Onboarding } from './screens/Onboarding';
 
-// Sentinel used as useLiveQuery's defaultResult so we can distinguish
-// "query still loading" (returns LOADING) from "query resolved to undefined"
-// (returns undefined, i.e. no settings row → show onboarding).
 const LOADING = Symbol('loading');
 
 export default function App() {
