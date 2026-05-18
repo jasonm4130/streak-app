@@ -4,8 +4,6 @@
  * - 1 session   → amber-dim half bar
  * - 2 sessions  → green-dim full bar
  * - 3+ sessions → green full bar
- * The current week (highest weekNumber with any data, or the last one < the
- * caller-provided cutoff) is outlined.
  *
  * @example
  *   <WeeklyTally weeks={weekRollup} target={2} />
@@ -20,7 +18,6 @@ interface Week {
 interface WeeklyTallyProps {
   weeks: Week[];
   target?: number;
-  currentWeek?: number;
 }
 
 function classFor(sessions: number, target: number): string {
@@ -30,16 +27,14 @@ function classFor(sessions: number, target: number): string {
   return styles.s3;
 }
 
-export function WeeklyTally({ weeks, target = 2, currentWeek }: WeeklyTallyProps) {
+export function WeeklyTally({ weeks, target = 2 }: WeeklyTallyProps) {
   return (
     <div className={styles.wrap}>
       <div className={styles.grid}>
         {weeks.map((w) => (
           <div
             key={w.weekNumber}
-            className={`${styles.col} ${classFor(w.sessions, target)} ${
-              currentWeek === w.weekNumber ? styles.current : ''
-            }`}
+            className={`${styles.col} ${classFor(w.sessions, target)}`}
             aria-label={`week ${w.weekNumber}: ${w.sessions} sessions`}
           />
         ))}

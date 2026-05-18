@@ -29,5 +29,3 @@ export function weekFor(date: Date, marathonDate: Date): WeekInfo {
   const dayOfWeek = (daysFromW1Start % 7) + 1; // 1..7
   return { weekNumber: weekIndex0 + 1, dayOfWeek };
 }
-
-export { week1Start };

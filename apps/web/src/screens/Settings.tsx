@@ -45,7 +45,7 @@ export function Settings({ settings }: { settings: SettingsT }) {
   return (
     <div style={{ padding: 'var(--space-4)', maxWidth: 480, margin: '0 auto' }}>
       <FieldRow label="body weight" status="pending">
-        <NumberInput value={settings.bodyWeightKg} onChange={(n) => n && patch({ bodyWeightKg: n })} step={0.1} min={20} max={300} suffix="kg" />
+        <NumberInput value={settings.bodyWeightKg} onChange={(n) => n !== undefined && patch({ bodyWeightKg: n })} step={0.1} min={20} max={300} suffix="kg" />
       </FieldRow>
 
       <FieldRow label="marathon date" status="pending">
@@ -58,19 +58,11 @@ export function Settings({ settings }: { settings: SettingsT }) {
       </FieldRow>
 
       <FieldRow label="sleep floor" status="pending">
-        <NumberInput value={settings.sleepFloorHours} onChange={(n) => n && patch({ sleepFloorHours: n })} step={0.25} min={4} max={12} suffix="h" />
+        <NumberInput value={settings.sleepFloorHours} onChange={(n) => n !== undefined && patch({ sleepFloorHours: n })} step={0.25} min={4} max={12} suffix="h" />
       </FieldRow>
 
       <FieldRow label="protein floor" status="pending">
-        <NumberInput value={settings.proteinFloorPerKg} onChange={(n) => n && patch({ proteinFloorPerKg: n })} step={0.1} min={0.5} max={3} suffix="g/kg" />
-      </FieldRow>
-
-      <FieldRow label="mobility floor" status="pending">
-        <NumberInput value={settings.mobilityFloorMin} onChange={(n) => n && patch({ mobilityFloorMin: n })} step={1} min={0} max={60} suffix="min" />
-      </FieldRow>
-
-      <FieldRow label="reading floor" status="pending">
-        <NumberInput value={settings.readingFloorPages} onChange={(n) => n && patch({ readingFloorPages: n })} step={1} min={0} max={100} suffix="pg" />
+        <NumberInput value={settings.proteinFloorPerKg} onChange={(n) => n !== undefined && patch({ proteinFloorPerKg: n })} step={0.1} min={0.5} max={3} suffix="g/kg" />
       </FieldRow>
 
       <hr style={{ border: 0, borderTop: '1px solid var(--border)', margin: 'var(--space-5) 0' }} />

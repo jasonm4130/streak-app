@@ -49,8 +49,6 @@ describe('db round-trip', () => {
       marathonDate: '2026-08-30',
       proteinFloorPerKg: 1.6,
       sleepFloorHours: 7,
-      mobilityFloorMin: 5,
-      readingFloorPages: 10,
     });
     const s = await db.settings.get('singleton');
     expect(s?.bodyWeightKg).toBe(100);

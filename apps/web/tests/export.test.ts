@@ -8,8 +8,6 @@ const baseSettings = {
   marathonDate: '2026-08-30',
   proteinFloorPerKg: 1.6,
   sleepFloorHours: 7,
-  mobilityFloorMin: 5,
-  readingFloorPages: 10,
 };
 
 describe('export / import', () => {

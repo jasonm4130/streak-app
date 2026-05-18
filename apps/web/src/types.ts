@@ -28,16 +28,12 @@ export interface Settings {
   marathonDate: string; // 'YYYY-MM-DD'
   proteinFloorPerKg: number;
   sleepFloorHours: number;
-  mobilityFloorMin: number;
-  readingFloorPages: number;
 }
 
 export const DEFAULT_SETTINGS: Omit<Settings, 'bodyWeightKg' | 'marathonDate'> = {
   id: 'singleton',
   proteinFloorPerKg: 1.6,
   sleepFloorHours: 7,
-  mobilityFloorMin: 5,
-  readingFloorPages: 10,
 };
 
 export const DEFAULT_MARATHON_DATE = '2026-08-30';
